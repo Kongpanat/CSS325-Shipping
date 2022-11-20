@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <?php require_once('connect.php');
 session_start();
 $loginemail = $_SESSION['loginemail'];
@@ -16,6 +17,7 @@ if ($result = $mysqli->query($q)) {
 } else {
     echo 'Query error: ' . $mysqli->error;
 } ?>
+
 <html lang="en">
 
 <head>

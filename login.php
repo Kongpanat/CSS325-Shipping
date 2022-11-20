@@ -43,7 +43,7 @@
                     <div class="row">
                         <!-- Contact Form Holder -->
                         <div class="col-md-8 offset-md-2 contact-form-holder mt-4">
-                            <form method="POST" name="login-form" action="">
+                            <form method="POST" name="login-form" action="staff_verification.php">
                                 <div class="row">
                                     <div class="col-md-12 form-input">
                                         <input type="text" class="form-control" id="loginemail" name="loginemail" placeholder="Email">
@@ -75,24 +75,5 @@
         </footer>
     </div>
 </body>
-
-<?php
-if (isset($_POST['login'])) {
-    // select the email and password for checking
-    $q = 'SELECT email,password FROM staff;';
-    if ($result = $mysqli->query($q)) {
-        while ($row = $result->fetch_array()) {
-            if ($_POST['loginemail'] == $row[0] && $_POST['loginpassword'] == $row[1]) {
-                session_start();
-                $_SESSION['loginemail'] = $_POST['loginemail'];
-                $_SESSION['loginpassword'] = $_POST['loginpassword'];
-                header("Location:home.php");
-            }
-        }
-    } else {
-        echo 'Query error: ' . $mysqli->error;
-    }
-}
-?>
 
 </html>
