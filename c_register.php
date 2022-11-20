@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
 require_once('connect.php'); 
-if (isset($_SESSION['loginemail']) && isset($_SESSION['loginemail'])) {
 session_start();
+if (isset($_SESSION['loginemail']) && isset($_SESSION['loginemail'])) {
     $loginemail = $_SESSION['loginemail'];
 	$loginpassword = $_SESSION['loginpassword'];
 }
