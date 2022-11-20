@@ -87,8 +87,6 @@
                                             } else {
                                                 echo 'Query error: ' . $mysqli->error;
                                             }
-
-                                            header("Location:login.php");
                                             ?>
                                         </select>
                                     </div>
