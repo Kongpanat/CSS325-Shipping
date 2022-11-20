@@ -1,4 +1,6 @@
-<?php require_once('connect.php');
+<?php
+error_reporting (E_ALL ^ E_NOTICE);
+require_once('connect.php');
 session_start();
 if (isset($_POST['signup'])) {
     $firstname = $_POST["fname"];
@@ -12,11 +14,8 @@ if (isset($_POST['signup'])) {
 
     $errors = array();
     $x = 0;
-    $user_check_query = "SELECT * FROM user WHERE email = '$email' ";
-    $query = mysqli_query($mysqli, $user_check_query);
-    $result = mysqli_fetch_assoc($query);
     //errors case
-    if (empty($email) || empty($firstname) || empty($lastname) || empty($passwd) || empty($addr) || empty($dob) || empty($phone) || empty($branch)) {
+    if (empty($email) || empty($firstname) || empty($lastname) || empty($passwd) || empty($addr) || empty($dob) || empty($phone) || !isset($branch)) {
         $x = 1;
 
         echo ("<script LANGUAGE='JavaScript'>
