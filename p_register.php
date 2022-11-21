@@ -192,7 +192,7 @@ if ($result = $mysqli->query($q)) {
 	<script src="//localhost:35729/livereload.js"></script>
 </body>
 <?php
-if (!empty($_POST['loginemail']) || empty($_POST['loginpassword'])){
+if (isset($_POST['p_submit'])){
 	// insert to package table
 	$q = "INSERT INTO package (Shipment_Method,Note) 
 	VALUES ('$_POST[shipmentmethod]','$_POST[note]')";
