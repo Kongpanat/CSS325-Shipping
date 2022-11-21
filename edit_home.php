@@ -3,10 +3,9 @@
 session_start();
 if (isset($_SESSION['loginemail']) && isset($_SESSION['loginemail'])) {
     $loginemail = $_SESSION['loginemail'];
-	$loginpassword = $_SESSION['loginpassword'];
-}
-else{
-header('location:login.php');
+    $loginpassword = $_SESSION['loginpassword'];
+} else {
+    header('location:login.php');
 }
 //identify account info. that login
 $q = "SELECT Fname,Lname,Branch_ID FROM staff WHERE Email ='$loginemail' AND Password='$loginpassword'";

@@ -2,11 +2,10 @@
 <?php require_once('connect.php');
 session_start();
 if (isset($_SESSION['loginemail']) && isset($_SESSION['loginemail'])) {
-    $loginemail = $_SESSION['loginemail'];
+	$loginemail = $_SESSION['loginemail'];
 	$loginpassword = $_SESSION['loginpassword'];
-}
-else{
-header('location:login.php');
+} else {
+	header('location:login.php');
 }
 //identify account info. that login
 $q = "SELECT Fname,Lname,Branch_ID FROM staff WHERE Email ='$loginemail' AND Password='$loginpassword'";
@@ -91,7 +90,7 @@ if ($result = $mysqli->query($q)) {
 					<div class="row">
 						<!-- film Content Holder -->
 						<div class="col-md-8 offset-md-2 mt-4">
-							<form method="post" name="package-register-form" action="">
+							<form method="post" name="package-register-form" action="p_register_out.php">
 								<h1 style="font-size:28px;position:relative;">Sender Information</h1><br>
 								<div class="row">
 									<div class="col-md-6 form-input">
@@ -191,91 +190,5 @@ if ($result = $mysqli->query($q)) {
 	<script src="js/app.min.js "></script>
 	<script src="//localhost:35729/livereload.js"></script>
 </body>
-<?php
-if (isset($_POST['p_submit'])){
-	// insert to package table
-	$q = "INSERT INTO package (Shipment_Method,Note) 
-	VALUES ('$_POST[shipmentmethod]','$_POST[note]')";
-	$result = $mysqli->query($q);
-	if (!$result) {
-		echo 'Query error: ' . $mysqli->error;
-	}
-	//identify input for sender table
-	$q = "SELECT customer_ID FROM customer WHERE Fname ='$_POST[s_fname]' AND Lname='$_POST[s_lname]' AND Phone_no='$_POST[s_phonenumber]'";
-	$custID = '-1';
-	if ($result = $mysqli->query($q)) {
-		while ($row = $result->fetch_array()) {
-			if (isset($row[0])) {
-				$custID = $row[0];
-			}
-		}
-	} else {
-		echo 'Query error: ' . $mysqli->error;
-	}
-	$q = "SELECT package_ID FROM package ORDER BY Package_ID DESC LIMIT 1";
-	if ($result = $mysqli->query($q)) {
-		while ($row = $result->fetch_array()) {
-			$packID = $row[0];
-		}
-	} else {
-		echo 'Query error: ' . $mysqli->error;
-	}
-	// insert to sender table
-	$q = "INSERT INTO sender (Customer_ID,Package_ID,Sending_Addr,Postal_code) 
-	VALUES ($custID,$packID,'$_POST[sendadd]','$_POST[s_pc]')";
-	$result = $mysqli->query($q);
-	if (!$result) {
-		echo 'Query error: ' . $mysqli->error;
-	}
-	//identify input for receiver table
-	$q = "SELECT customer_ID FROM customer WHERE Fname ='$_POST[r_fname]' AND Lname='$_POST[r_lname]' AND Phone_no='$_POST[r_phonenumber]'";
-	$custID = '-1';
-	if ($result = $mysqli->query($q)) {
-		while ($row = $result->fetch_array()) {
-			if (isset($row[0])) {
-				$custID = $row[0];
-			}
-		}
-	} else {
-		echo 'Query error: ' . $mysqli->error;
-	}
-	// insert to receiver table
-	$q = "INSERT INTO receiver (Customer_ID,Fname,LName,Phone_no,Receiving_Addr,Postal_code) 
-	VALUES ($custID,'$_POST[r_fname]','$_POST[r_lname]','$_POST[r_phonenumber]','$_POST[recadd]','$_POST[r_pc]')";
-	$result = $mysqli->query($q);
-	if (!$result) {
-		echo 'Query error: ' . $mysqli->error;
-	}
-	//identify input for sending table
-	$q = "SELECT Sender_ID FROM sender ORDER BY Sender_ID DESC LIMIT 1";
-	if ($result = $mysqli->query($q)) {
-		while ($row = $result->fetch_array()) {
-			if (isset($row[0])) {
-				$senderID = $row[0];
-			}
-		}
-	} else {
-		echo 'Query error: ' . $mysqli->error;
-	}
-
-	$q = "SELECT Receiver_ID FROM receiver ORDER BY Receiver_ID DESC LIMIT 1";
-	if ($result = $mysqli->query($q)) {
-		while ($row = $result->fetch_array()) {
-			if (isset($row[0])) {
-				$receiverID = $row[0];
-			}
-		}
-	} else {
-		echo 'Query error: ' . $mysqli->error;
-	}
-	// insert to sending table
-	$q = "INSERT INTO sending (Sender_ID,Receiver_ID,SendBranch_ID,Sending_Type) 
-	VALUES ($senderID,$receiverID,$AccBranch,'$_POST[sendingtype]')";
-	$result = $mysqli->query($q);
-	if (!$result) {
-		echo 'Query error: ' . $mysqli->error;
-	}
-}
-?>
 
 </html>
