@@ -164,7 +164,7 @@ header('location:login.php');
                     <script src="//localhost:35729/livereload.js"></script>
 </body>
 <?php 
-				if(!empty($_POST['c_fname']) || empty($_POST['c_lname']) || (empty($_POST['c_lname']) && empty($_POST['c_phonenumber']))){
+				if(isset($_POST['c_submit']))){
 					// insert to c_register table
 					$q="INSERT INTO customer (Fname,Lname,Email,Phone_no,DOB,Sex) 
 					VALUES ('$_POST[c_fname]','$_POST[c_lname]','$_POST[c_email]','$_POST[c_phonenumber]','$_POST[c_dob]','$_POST[c_sex]')";
