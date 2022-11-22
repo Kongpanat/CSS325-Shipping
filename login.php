@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <?php require_once('connect.php'); ?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,30 +31,42 @@
 
 <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
     <div class="boxed-page">
+        <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center">
+                    <span class="lnr lnr-moon"></span>
+                </a>
+
+            </div>
+
+        </nav>
         <!-- Login Form Section -->
         <section id="gtco-contact-form" class="bg-white">
             <div class="container">
                 <div class="section-content">
                     <!-- Section Title -->
                     <div class="title-wrap">
-                        <h1 class="display-2 mb-4">LOGIN</h1><br>
+                        <h1 class="display-2 mb-4">Login</h1><br>
                     </div>
                     <!-- End of Section Title -->
                     <div class="row">
                         <!-- Contact Form Holder -->
                         <div class="col-md-8 offset-md-2 contact-form-holder mt-4">
-                            <form method="POST" name="login-form" action="staff_verification.php">
+                            <form method="post" name="login-form" action="loginbackend.php">
                                 <div class="row">
                                     <div class="col-md-12 form-input">
-                                        <input type="text" class="form-control" id="loginemail" name="loginemail" placeholder="Email">
+                                        <input type="text" class="form-control" id="email" name="email"
+                                            placeholder="Email">
                                     </div>
                                     <div class="col-md-12 form-input">
-                                        <input type="password" class="form-control" id="loginpassword" name="loginpassword" placeholder="Password">
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="Password">
                                     </div>
                                     <div class="col-md-12 form-btn text-center">
                                         <input class="btn btn-block btn-secondary btn-red" type="submit" name="login" value="LOGIN">
                                     </div>
-                                    <div class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
+                                    <div
+                                        class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
                                         <a href="signup.php">
                                             SIGN UP
                                         </a>
@@ -69,8 +81,12 @@
         </section>
         <!-- End of Contact Form Section -->
         <footer class="mastfoot mb-3 bg-white py-4 border-top">
-            <div class="row">
-                <p style="font-size:20px">&emsp;&emsp;CSS 325 Database Systems : Shipping Management System</p>
+            <div class="inner container">
+                <div class="row">
+                    <div class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
+                        <p class="mb-0">Project CSS326 Movie Rental System</p>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>

@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <?php require_once('connect.php'); ?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -30,92 +30,90 @@
 </head>
 
 <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+
     <div class="boxed-page">
+	
+        <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center">
+                    <span class="lnr lnr-moon"></span>
+                </a>
+
+            </div>
+
+        </nav>
         <!-- Login Form Section -->
+		
         <section id="gtco-contact-form" class="bg-white">
             <div class="container">
                 <div class="section-content">
                     <!-- Section Title -->
                     <div class="title-wrap">
-                        <h1 class="display-2 mb-4">SIGNUP</h1><br>
+                        <h1 class="display-2 mb-4">Sign Up</h1><br>
                     </div>
                     <!-- End of Section Title -->
                     <div class="row">
-                        <!-- sign up Form Holder -->
+                        <!-- Contact Form Holder -->
                         <div class="col-md-8 offset-md-2 contact-form-holder mt-4">
-                            <form method="post" name="login-form" action="staff_register.php">
-                                <h1 style="font-size:28px;position:relative;">Account Information</h1><br>
+                            <form method="post" name="login-form" action="signupbackend.php">
                                 <div class="row">
                                     <div class="col-md-6 form-input">
-                                        <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
+                                        <input type="text" class="form-control" id="fname" name="fname"
+                                            placeholder="First Name">
                                     </div>
                                     <div class="col-md-6 form-input">
-                                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
+                                        <input type="text" class="form-control" id="lname" name="lname"
+                                            placeholder="Last Name">
                                     </div>
                                     <div class="col-md-12 form-input">
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                                        <input type="text" class="form-control" id="email" name="email"
+                                            placeholder="Email">
+									
                                     </div>
                                     <div class="col-md-12 form-input">
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="Password">
                                     </div>
-                                </div>
-                                <h1 style="font-size:28px;position:relative;">Staff Information</h1>
-                                <div class="row">
-                                    <p>Address:</p>
                                     <div class="col-md-12 form-input">
-                                        <textarea type="text" class="form-control" style="height:12em;" id="staffadd" name="staffadd"></textarea>
+                                        <input type="password" class="form-control" id="password2" name="password2"
+                                            placeholder="Confirm Password">
                                     </div>
-                                    <p>Date of Birth:</p>
                                     <div class="col-md-12 form-input">
-                                        <input type="date" class="form-control" id="DOB" name="DOB">
-                                    </div>
-                                    <p>Phone Number:</p>
-                                    <div class="col-md-12 form-input">
-                                        <input type="text" class="form-control" id="staffphone" name="staffphone" placeholder="0XX-XXX-XXXX">
-                                    </div>
-                                    <p>Branch:</p>
-                                    <div class="col-md-12 form-input">
-                                        <select class="form-control" name='branch'>
-                                            <option value="" disabled selected>Select Branch</option>
-                                            <?php
-                                            // select the BranchID 
-                                            $q = 'SELECT Branch_ID FROM branch;';
-                                            if ($result = $mysqli->query($q)) {
-                                                while ($row = $result->fetch_array()) {
-                                                    echo '<option value="' . $row[0] . '">' . $row[0] . '</option>';
-                                                }
-                                            } else {
-                                                echo 'Query error: ' . $mysqli->error;
-                                            }
-                                            ?>
+                                        <select class="form-control" name='acctype'>
+                                            <option value="" disabled selected>Select account type</option>
+                                            <option value="customer">Customer</option>
+                                            <option value="admin">Admin</option>
                                         </select>
                                     </div>
-                                    <br>
-                                    <br>
                                     <div class="col-md-12 form-btn text-center">
                                         <input class="btn btn-block btn-secondary btn-red" type="submit" name="signup" value="SIGNUP">
                                     </div>
-                                    <div class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
+                                    <div
+                                        class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
                                         <a href="login.php">
                                             LOGIN
                                         </a>
                                     </div>
+									
                                 </div>
                             </form>
                         </div>
-                        <!-- End of sign up Form Holder -->
+                        <!-- End of Contact Form Holder -->
                     </div>
                 </div>
             </div>
         </section>
-        <!-- End of sign up Form Section -->
+        <!-- End of Contact Form Section -->
         <footer class="mastfoot mb-3 bg-white py-4 border-top">
-            <div class="row">
-                <p style="font-size:20px">&emsp;&emsp;CSS 325 Database Systems : Shipping Management System</p>
+            <div class="inner container">
+                <div class="row">
+                    <div class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
+                        <p class="mb-0">Project CSS326 Movie Rental System</p>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
-
 </body>
 
 </html>

@@ -1,8 +1,6 @@
 <?php require_once('connect.php');
 session_start();
-if (isset($_SESSION['admin_id'])) {
-    $admin_id = $_SESSION['admin_id'];
-}
+$user_id = $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +9,7 @@ if (isset($_SESSION['admin_id'])) {
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home</title>
+    <title>Inventory</title>
     <meta name="description" content="Core HTML Project">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -36,14 +34,18 @@ if (isset($_SESSION['admin_id'])) {
 
 <body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
     <div class="boxed-page">
+        <!--Start Header-->
         <nav id="gtco-header-navbar" class="navbar navbar-expand-lg py-4">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="home.php">
                     <span class="lnr lnr-moon"></span>
                 </a>
+                <!--Menu Button-->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-nav-header" aria-controls="navbar-nav-header" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="lnr lnr-menu"></span>
                 </button>
+                <!--End Menu Button-->
+                <!--Hidden Menu-->
                 <div class="collapse navbar-collapse" id="navbar-nav-header">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -67,96 +69,69 @@ if (isset($_SESSION['admin_id'])) {
                         </li>
                     </ul>
                 </div>
+                <!--End Hidden Menu-->
             </div>
         </nav>
+        <!--End Header-->
+
         <section id="gtco-contact-form" class="bg-white">
             <div class="container">
                 <div class="section-content">
                     <!-- Section Title -->
                     <div class="title-wrap">
-                        <h1 class="display-2 mb-4">Search Film</h1><br>
+                        <h1 class="display-2 mb-4">Inventory</h1><br>
                     </div>
                     <!-- End of Section Title -->
                     <div class="row">
                         <!-- Contact Form Holder -->
                         <div class="col-md-8 offset-md-2 contact-form-holder mt-4">
-
                             <form method="post" name="login-form" action="">
-
                                 <div class="row">
                                     <div class="col-md-12 form-input">
-                                        <select class="form-control" id="title" name="title">
-                                            <option value="" disabled selected>Film Title</option>
-                                            <!--Do php-->
+                                        <!--Begin Table-->
+                                        <table style="text-align: center; border-collapse: collapse; border: 1px solid black; table-layout: fixed; width: 100%;">
+                                            <tr>
+                                                <th style="border: 1px solid black">Title</th>
+                                                <th style="border: 1px solid black">Rent Date</th>
+                                                <th style="border: 1px solid black">Return date</th>
+                                                <th style="border: 1px solid black">Amount</th>
+                                                <th style="border: 1px solid black">Rental Rate</th>
+                                                <th style="border: 1px solid black">Price</th>
+                                                <th style="border: 1px solid black">Del</th>
+                                            </tr>
+                                            <!--Do php in tr-->
                                             <?php
-                                            $q = "SELECT * FROM film,film_genre WHERE film.film_id=film_genre.film_id ";
-                                            $result = $mysqli->query($q);
-                                            if (!$result) {
-                                                echo "Select failed. Error: " . $mysqli->error;
-                                                return false;
-                                            }
-                                            while ($row = $result->fetch_array()) {
+                                            $select = mysqli_query($mysqli, "SELECT * FROM film,rental WHERE rental.customer_id='$user_id' AND film.inventory_id=rental.inventory_id") or die('query faied');
+
+                                            while ($row = $select->fetch_array()) {
                                             ?>
-                                                <option value="<?= $row['title'] ?>"><?= $row['title'] ?></option>
-                                            <?php } ?>
-                                        </select>
+                                                <tr>
+                                                    <td><?= $row['title'] ?></td>
+                                                    <td><?= $row['rental_date'] ?></td>
+                                                    <td><?= $row['return_date'] ?></td>
+                                                    <td><?= $row['amount'] ?></td>
+                                                    <td><?= $row['rental_rate'] ?> / days</td>
+                                                    <td><?= $row['replacement_cost']?></td>
+                                                    <td><a href='del_inventory.php?rental_id=<?= $row['rental_id'] ?>'>Remove</a></td>
+                                                </tr>
+                                            <?php    }    ?>
+                                        </table>
+                                        <!--End Table-->
+                                        <?php
+                                        $stmt = mysqli_query($mysqli,    "SELECT SUM(replacement_cost) AS value_sum FROM film,rental 
+											WHERE rental.customer_id='$user_id' AND film.inventory_id=rental.inventory_id");
+                                        $row = $stmt->fetch_array();
+                                        $sum = $row['value_sum'];
+                                        echo '<div style="text-align: justify; text-align-last: right">Total Cost: $' . $sum. '</div>';?>
                                     </div>
-                                    <br>
-                                    <br>
-                                    <div class="col-md-12 form-btn text-center">
-                                        <input class="btn btn-block btn-secondary btn-red" type="submit" name="submit" value="SEARCH">
-                                    </div>
-                                    <?php
-                                    if (isset($_POST['submit'])) {
-                                        if (!empty($_POST['title'])) {
-                                            $selected = $_POST['title'];
-                                            $x = 'film.php?title=' . $selected;
-                                            echo ("<script LANGUAGE='JavaScript'>
-														window.location.href='$x';
-														</script>");
-                                        } else {
-                                            echo 'Please select film title.';
-                                        }
-                                    }
-                                    ?>
                                 </div>
-                                <br>
-                                <h5>All films</h5>
-                                <br>
-                                <!--Begin Table-->
-                                <table style="text-align: center; border-collapse: collapse; border: 1px solid black; table-layout: fixed; width: 100%;">
-                                    <tr>
-                                        <th style="border: 1px solid black">Title</th>
-                                        <th style="border: 1px solid black">Release Year</th>
-                                        <th style="border: 1px solid black">Genre</th>
-                                        <th style="border: 1px solid black">Length</th>
-                                        <th style="border: 1px solid black">Rental Rate</th>
-                                    </tr>
-                                    <!--Do php in tr-->
-                                    <?php
-                                    $q = "SELECT * FROM film,film_genre WHERE film.film_id=film_genre.film_id ";
-                                    $result = $mysqli->query($q);
-                                    if (!$result) {
-                                        echo "Select failed. Error: " . $mysqli->error;
-                                        return false;
-                                    }
-                                    while ($row = $result->fetch_array()) { ?>
-                                        <tr>
-                                            <td><a href='film.php?title=<?= $row['title'] ?>'><?= $row['title'] ?></a></td>
-                                            <td><?= $row['release_year'] ?> </td>
-                                            <td><?= $row['genre_name'] ?></td>
-                                            <td><?= $row['length'] ?></td>
-                                            <td><?= $row['rental_rate'] ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
-                                <!--End Table-->
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+        <!--Start Footer-->
         <footer class="mastfoot mb-3 bg-white py-4 border-top">
             <div class="inner container">
                 <div class="row">
@@ -166,6 +141,7 @@ if (isset($_SESSION['admin_id'])) {
                 </div>
             </div>
         </footer>
+        <!--End Footer-->
     </div>
 
     <!-- External JS -->
